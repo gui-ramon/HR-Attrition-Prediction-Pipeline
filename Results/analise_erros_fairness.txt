@@ -1,0 +1,44 @@
+
+=== Análise de Erros e Fairness ===
+
+--- Erros: RandomForest ---
+Verdadeiros Negativos: 74399
+Falsos Positivos: 89901
+Falsos Negativos: 8055
+Verdadeiros Positivos: 27645
+
+--- Erros: LogisticRegression ---
+Verdadeiros Negativos: 9162
+Falsos Positivos: 155138
+Falsos Negativos: 501
+Verdadeiros Positivos: 35199
+
+--- Erros: LightGBM ---
+Verdadeiros Negativos: 118697
+Falsos Positivos: 45603
+Falsos Negativos: 17433
+Verdadeiros Positivos: 18267
+
+--- Erros: RidgeClassifier ---
+Verdadeiros Negativos: 3585
+Falsos Positivos: 160715
+Falsos Negativos: 176
+Verdadeiros Positivos: 35524
+
+--- Erros: VotingEnsemble ---
+Verdadeiros Negativos: 95206
+Falsos Positivos: 69094
+Falsos Negativos: 11814
+Verdadeiros Positivos: 23886
+
+--- Fairness por Gender ---
+RandomForest | Gender = Male | Acurácia: 0.4967
+LogisticRegression | Gender = Male | Acurácia: 0.2221
+LightGBM | Gender = Male | Acurácia: 0.6826
+RidgeClassifier | Gender = Male | Acurácia: 0.1963
+VotingEnsemble | Gender = Male | Acurácia: 0.5873
+RandomForest | Gender = Female | Acurácia: 0.5305
+LogisticRegression | Gender = Female | Acurácia: 0.2214
+LightGBM | Gender = Female | Acurácia: 0.6881
+RidgeClassifier | Gender = Female | Acurácia: 0.1944
+VotingEnsemble | Gender = Female | Acurácia: 0.6078
