@@ -59,8 +59,8 @@ Sistema completo de Machine Learning para previsão de rotatividade (attrition) 
 - **matplotlib** & **seaborn**: Visualizações
 
 ## Observações
-**Obs: Não foi possível subir os modelos de Random Forest e Voting Ensemble no Git devido o tamngho do pkl (Random Forest:  847.943KB | Voting Ensemble: 1.700.483KB).
-**Obs: O código foi todo rodado no Jupyter, por isso está tudo em um único processo.
+- **Obs: Não foi possível subir os modelos de Random Forest e Voting Ensemble no Git devido o tamngho do pkl (Random Forest:  847.943KB | Voting Ensemble: 1.700.483KB).
+- **Obs: O código foi todo rodado no Jupyter, por isso está tudo em um único processo.
 
 ## 💻 Como Usar
 
