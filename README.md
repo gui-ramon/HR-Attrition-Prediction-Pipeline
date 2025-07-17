@@ -1,9 +1,5 @@
 # 🎯 HR Attrition Prediction Pipeline
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-HR%20Analytics-green)](https://github.com/matheuspavanids/project-ml-mackenzie)
-
 ## 📋 Visão Geral
 
 Sistema completo de Machine Learning para previsão de rotatividade (attrition) de funcionários, desenvolvido como projeto acadêmico para o Mackenzie. O pipeline implementa técnicas avançadas de balanceamento de dados, otimização de hiperparâmetros e múltiplos algoritmos de classificação.
@@ -18,8 +14,8 @@ Sistema completo de Machine Learning para previsão de rotatividade (attrition) 
 ### 📊 Resultados Principais
 
 - **Melhor Modelo**: LightGBM
-- **F1-Score**: 0.3672 (LightGBM)
-- **Recall**: 0.5120 (capacidade de identificar funcionários em risco)
+- **F1-Score**: 0.3669 (LightGBM)
+- **Recall**: 0.5117 (capacidade de identificar funcionários em risco)
 - **AUC-ROC**: 0.6751
 - **Dataset**: 1.000.000 registros sintéticos baseados no padrão IBM HR Analytics
 
@@ -62,26 +58,9 @@ Sistema completo de Machine Learning para previsão de rotatividade (attrition) 
 - **imbalanced-learn**: Técnicas de balanceamento (SMOTE)
 - **matplotlib** & **seaborn**: Visualizações
 
-## 🔧 Instalação
-
-1. **Clone o repositório**
-```bash
-git clone https://github.com/matheuspavanids/project-ml-mackenzie.git
-cd project-ml-mackenzie
-```
-
-2. **Crie um ambiente virtual**
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# ou
-venv\Scripts\activate  # Windows
-```
-
-3. **Instale as dependências**
-```bash
-pip install pandas numpy scikit-learn lightgbm optuna imbalanced-learn matplotlib seaborn joblib
-```
+## Observações
+**Obs: Não foi possível subir os modelos de Random Forest e Voting Ensemble no Git devido o tamngho do pkl (Random Forest:  847.943KB | Voting Ensemble: 1.700.483KB).
+**Obs: O código foi todo rodado no Jupyter, por isso está tudo em um único processo.
 
 ## 💻 Como Usar
 
@@ -94,25 +73,25 @@ from main_pipeline import run_complete_pipeline
 ## 📊 Features Mais Importantes
 
 ### Top 9 Features (LightGBM)
-1. **YearsAtCompany**: Anos na empresa atual
-2. **NumCompaniesWorked**: Número de empresas em que já trabalhou
+1. **NumCompaniesWorked**: Número de empresas em que já trabalhou
+2. **YearsAtCompany**: Anos na empresa atual
 3. **WorkLifeBalance**: Equilíbrio entre vida pessoal e trabalho
 4. **MonthlyIncome**: Renda Mensal
-5. **DailyRate**: Remuneração fixa diária
-6. **DistanceFromHome**: Distância de casa até o trabalho
-7. **IncomeToEducation**: Renda em relação ao nível educacional
-8. **MonthlyRate**: Remuneração fixa mensal
-9. **PercentSalaryHike**: Aumento percentual no salário
+5. **IncomeToEducation**: Renda em relação ao nível educacional
+6. **MonthlyRate**: Remuneração fixa mensal
+7. **DailyRate**: Remuneração fixa diária
+8. **PercentSalaryHike**: Aumento percentual no salário
+9. **DistanceFromHome**: Distância de casa até o trabalho
 
 ## 📈 Métricas de Performance
 
 | Modelo | Precision | Recall | F1-Score | AUC-ROC | Tempo (s) |
 |--------|-----------|--------|----------|---------|-----------|
-| RandomForest | 0.234 | 0.777 | 0.360 | 0.662 | 16729.58 |
-| LogisticRegression | 0.184 | 0.986 | 0.311 | 0.657 | 2946.81 |
-| **LightGBM** | **0.286** | **0.512** | **0.367** | **0.675** | 1874.88 |
-| RidgeClassifier | 0.181 | 0.995 | 0.306 | 0.657 | 446.92 |
-| VotingEnsemble | 0.256 | 0.668 | 0.370 | 0.671 | 0.0 |
+| RandomForest | 0.235 | 0.774 | 0.360 | 0.662 | 18117.16 |
+| LogisticRegression | 0.184 | 0.986 | 0.311 | 0.657 | 3162.88 |
+| **LightGBM** | **0.286** | **0.511** | **0.366** | **0.675** | 1906.61 |
+| RidgeClassifier | 0.181 | 0.995 | 0.306 | 0.657 | 475.86 |
+| VotingEnsemble | 0.256 | 0.669 | 0.371 | 0.671 | 2420.94 |
 
 ## 🔍 Insights do Negócio
 
@@ -129,7 +108,7 @@ from main_pipeline import run_complete_pipeline
 ## 👥 Autor
 
 **Guilherme Camargo**
-- GitHub: [@matheuspavanids](https://github.com/matheuspavanids)
+- GitHub: [@gui_ramon] (https://github.com/gui-ramon)
 - Projeto desenvolvido para Universidade Presbiteriana Mackenzie
 
 **Projeto desenvolvimento para disciplina de Data Science ministrada pelo professor Matheus Pavani**
