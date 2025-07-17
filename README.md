@@ -17,31 +17,31 @@ Sistema completo de Machine Learning para previsão de rotatividade (attrition) 
 
 ### 📊 Resultados Principais
 
-- **F1-Score**: 0.378 (LightGBM)
-- **Recall**: 0.624 (capacidade de identificar funcionários em risco)
-- **AUC-ROC**: 0.672
-- **Dataset**: 50.000 registros sintéticos baseados no padrão IBM HR Analytics
+- **Melhor Modelo**: LightGBM
+- **F1-Score**: 0.3672 (LightGBM)
+- **Recall**: 0.5120 (capacidade de identificar funcionários em risco)
+- **AUC-ROC**: 0.6751
+- **Dataset**: 1.000.000 registros sintéticos baseados no padrão IBM HR Analytics
 
 ## 🚀 Funcionalidades
 
 ### 1. **Pipeline Completo de ML**
 - Preparação automática de dados
-- Feature engineering avançado (36 features originais → 66 features)
-- Múltiplos modelos: Random Forest, Logistic Regression, LightGBM
+- Feature engineering avançado (53 features selecionados)
+- Múltiplos modelos: Random Forest, Logistic Regression, LightGBM, Rigde Classifier
 - Otimização automática de hiperparâmetros com Optuna
 
 ### 2. **Tratamento de Desbalanceamento**
 - SMOTE (Synthetic Minority Over-sampling Technique)
-- Random Undersampling
-- Estratégia combinada (SMOTE + Undersampling)
 - Ajuste de threshold ótimo
 - Class weights balanceados
 
 ### 3. **Feature Engineering Avançado**
-- **Ratios financeiros**: IncomeToAge, YearsPerCompany, PromotionRate
-- **Indicadores de risco**: CriticalDistance, CriticalSatisfaction, StuckInRole
-- **Scores compostos**: OverallSatisfaction, WorkIntensity, RiskScore
-- **Categorias derivadas**: ExperienceLevel, AgeGroup, IncomeLevel
+- **Features numéricas derivadas**: IncomeToAge, YearsPerCompany, YearsWithoutPromotion, IncomeToEducation, DistanceSatisfactionRatio
+- **Features binárias**: HighDistance, LowSatisfaction, NoPromotion, HighPerformer, YoungHighLevel
+- **Scores compostos**: SatisfactionScore, WorkIntensity
+- **Features categóricas**: AgeGroup, IncomeGroup
+- **Features Polinomiais**: JobSatisfaction*MonthlyIncome, JobSatisfaction*StockOptionLevel, MonthlyIncome*SatisfactionScore, PercentSalaryHike*LowSatisfaction, PerformanceRating*LowSatisfaction, RelationshipSatisfaction*LowSatisfaction, LowSatisfaction^2, LowSatisfaction*WorkIntensity
 
 ### 4. **Visualizações e Relatórios**
 - Curvas ROC e Precision-Recall
@@ -61,11 +61,6 @@ Sistema completo de Machine Learning para previsão de rotatividade (attrition) 
 - **optuna**: Otimização bayesiana de hiperparâmetros
 - **imbalanced-learn**: Técnicas de balanceamento (SMOTE)
 - **matplotlib** & **seaborn**: Visualizações
-
-### Requisitos do Sistema
-- Python 3.8+
-- GPU NVIDIA (opcional, para acelerar LightGBM)
-- 8GB RAM mínimo (16GB recomendado)
 
 ## 🔧 Instalação
 
@@ -95,127 +90,46 @@ pip install pandas numpy scikit-learn lightgbm optuna imbalanced-learn matplotli
 ```python
 from main_pipeline import run_complete_pipeline
 
-# Executar com 50.000 amostras e estratégia SMOTE
-pipeline = run_complete_pipeline(n_samples=50000, balance_strategy='smote')
-```
-
-### Fazer Predições em Novos Dados
-
-```python
-from main_pipeline import load_and_use_saved_model
-
-# Carregar modelo salvo e fazer predições
-load_and_use_saved_model()
-```
-
-### Comparar Estratégias de Balanceamento
-
-```python
-from main_pipeline import compare_strategies
-
-# Comparar diferentes abordagens
-compare_strategies()
-```
-
-### Usar a Classe Pipeline Diretamente
-
-```python
-from hr_attrition_pipeline import HRAttritionPipeline
-import pandas as pd
-
-# Criar instância
-pipeline = HRAttritionPipeline(use_gpu=True, balance_strategy='smote')
-
-# Carregar seus dados
-df = pd.read_csv('seus_dados.csv')
-
-# Preparar dados
-X, y = pipeline.load_and_prepare_data(df)
-
-# Feature engineering
-X_engineered = pipeline.create_features(X)
-
-# Split treino/teste
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(
-    X_engineered, y, test_size=0.2, random_state=42, stratify=y
-)
-
-# Treinar modelos
-pipeline.train_models(X_train, y_train, X_test, y_test)
-
-# Gerar visualizações
-pipeline.plot_results(X_test, y_test)
-
-# Salvar melhor modelo
-pipeline.save_best_model()
-```
 
 ## 📊 Features Mais Importantes
 
-### Top 10 Features (LightGBM)
-1. **OverTime_Yes**: Trabalho em horas extras
-2. **JobSatisfaction**: Satisfação com o trabalho
-3. **WorkLifeBalance**: Equilíbrio vida-trabalho
-4. **EnvironmentSatisfaction**: Satisfação com ambiente
-5. **NumCompaniesWorked**: Número de empresas anteriores
-6. **YearsAtCompany**: Anos na empresa atual
-7. **YearsSinceLastPromotion**: Anos desde última promoção
-8. **StockOptionLevel**: Nível de stock options
-9. **JobLevel**: Nível hierárquico
-10. **MaritalStatus_Married**: Estado civil casado
+### Top 9 Features (LightGBM)
+1. **YearsAtCompany**: Anos na empresa atual
+2. **NumCompaniesWorked**: Número de empresas em que já trabalhou
+3. **WorkLifeBalance**: Equilíbrio entre vida pessoal e trabalho
+4. **MonthlyIncome**: Renda Mensal
+5. **DailyRate**: Remuneração fixa diária
+6. **DistanceFromHome**: Distância de casa até o trabalho
+7. **IncomeToEducation**: Renda em relação ao nível educacional
+8. **MonthlyRate**: Remuneração fixa mensal
+9. **PercentSalaryHike**: Aumento percentual no salário
 
 ## 📈 Métricas de Performance
 
 | Modelo | Precision | Recall | F1-Score | AUC-ROC | Tempo (s) |
 |--------|-----------|--------|----------|---------|-----------|
-| RandomForest | 0.267 | 0.574 | 0.364 | 0.659 | 429.2 |
-| LogisticRegression | 0.248 | 0.629 | 0.356 | 0.645 | 108.8 |
-| **LightGBM** | **0.271** | **0.624** | **0.378** | **0.673** | 3472.8 |
+| RandomForest | 0.234 | 0.777 | 0.360 | 0.662 | 16729.58 |
+| LogisticRegression | 0.184 | 0.986 | 0.311 | 0.657 | 2946.81 |
+| **LightGBM** | **0.286** | **0.512** | **0.367** | **0.675** | 1874.88 |
+| RidgeClassifier | 0.181 | 0.995 | 0.306 | 0.657 | 446.92 |
+| VotingEnsemble | 0.256 | 0.668 | 0.370 | 0.671 | 0.0 |
 
 ## 🔍 Insights do Negócio
 
 1. **Fatores Críticos de Attrition**:
-   - Funcionários com overtime têm 2x mais chance de sair
-   - Baixa satisfação no trabalho é o 2º fator mais importante
-   - Desequilíbrio vida-trabalho aumenta risco em 40%
-
-2. **Perfis de Alto Risco**:
-   - Jovens profissionais (< 25 anos) em vendas
-   - Funcionários com 5+ anos sem promoção
-   - Alta rotatividade prévia (4+ empresas)
+   - Funcionários com mais tempode de casa e mais empresas trabalhadas se mostraram features relevantes para o modelo
+   - Distância do trabalho se mostrou um fator relavante para saída de funcionário
+   - Desequilíbrio vida-trabalho aumenta risco de saída
 
 3. **Recomendações para RH**:
-   - Monitorar closely funcionários com overtime frequente
+   - Incentivar contratação de funcionários que morem próximo a empresa
    - Programas de well-being para melhorar work-life balance
-   - Revisão de política de promoções (máximo 3-4 anos)
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Por favor:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📝 Licença
-
-Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
+   - Incentivo a quem tem mais tempo de casa
 
 ## 👥 Autor
 
-**Matheus Pavan**
+**Guilherme Camargo**
 - GitHub: [@matheuspavanids](https://github.com/matheuspavanids)
 - Projeto desenvolvido para Universidade Presbiteriana Mackenzie
 
-## 🙏 Agradecimentos
-
-- Universidade Presbiteriana Mackenzie
-- Dataset inspirado no IBM HR Analytics Employee Attrition & Performance
-- Comunidade open-source pelas excelentes bibliotecas
-
----
-
-⭐ Se este projeto foi útil, considere dar uma estrela no GitHub!
+**Projeto desenvolvimento para disciplina de Data Science ministrada pelo professor Matheus Pavani**
