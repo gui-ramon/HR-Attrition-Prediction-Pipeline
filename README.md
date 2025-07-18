@@ -107,8 +107,8 @@ from main_pipeline import run_complete_pipeline
 
 ## 👥 Autor
 
-**Guilherme Camargo**
+**Guilherme R. S. Camargo - RA 10734218**
 - GitHub: [@gui_ramon] (https://github.com/gui-ramon)
 - Projeto desenvolvido para Universidade Presbiteriana Mackenzie
 
-**Projeto desenvolvimento para disciplina de Data Science ministrada pelo professor Matheus Pavani**
+**Projeto desenvolvimento para disciplina de Data Science ministrada pelo Professor Matheus Pavani**
